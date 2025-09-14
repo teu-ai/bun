@@ -18,11 +18,26 @@ let aws: AwsClient | undefined;
 
 let logger = console.log;
 
+const escapableChars = {
+  '"': '\\"',
+  "'": "\\'",
+  "\n": "\\n",
+  "\r": "\\r",
+  "\t": "\\t",
+  "\b": "\\b",
+  "\f": "\\f",
+  "\v": "\\v",
+  "\xFF": "\\\xFF",
+};
+
 function log(level: string, ...args: any[]): void {
   if (!args.length) {
     return;
   }
-  const messages = args.map(arg => Bun.inspect(arg).replace(/\n/g, "\r"));
+  const messages = args.map(
+    arg => Object.entries(escapableChars).reduce(
+      (acc, [target, escaped]) => acc.replaceAll(escaped, target), Bun.inspect(arg)
+    ).replace(/\n/g, "\r").replace(/^"|"$/g, ""));
   if (requestId === undefined) {
     logger(level, ...messages);
   } else {
