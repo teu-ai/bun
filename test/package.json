@@ -64,7 +64,7 @@
     "mongodb": "6.0.0",
     "msgpackr-extract": "3.0.2",
     "msw": "2.3.0",
-    "mysql2": "3.7.0",
+    "mysql2": "3.23.1",
     "node-gyp": "10.0.1",
     "nodemailer": "6.9.3",
     "p-queue": "8.1.0",
